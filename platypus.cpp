@@ -89,6 +89,7 @@ class PlatypusGame
     int points = 0;
 
     std::map<Animal,std::string> animal_strings;
+    std::map<Animal,std::string> animal_emoji;
 
     public:
     PlatypusGame(PlatypusMachine m) : machine(m)
@@ -98,6 +99,11 @@ class PlatypusGame
         animal_strings[WOMBAT] = "Wombat";
         animal_strings[EMU] = "Emu";
         animal_strings[PLATYPUS] = "Platypus";
+
+        animal_emoji[KANGAROO] = "🦘";
+        animal_emoji[WOMBAT] = "🦔";
+        animal_emoji[EMU] = "🦃";
+        animal_emoji[PLATYPUS] = "🦫";
     }
 
     void play()
@@ -107,14 +113,15 @@ class PlatypusGame
         for (int move = 0; machine.getAnimal() != TERMINATED; ++move)
         {
             const int pos = machine.getPosition() % 20; // Loops
+            printf("%*s%s\n", pos*2, "",animal_emoji[machine.getAnimal()].c_str());
             // Print the board
             for (Colour c : board)
             {
-                std::cout << (c==YELLOW ? 'Y' : 'G');
+                std::cout << (c==YELLOW ? "🟨" : "🟩");
             }
             std::cout<<" | Animal: \"" << animal_strings[machine.getAnimal()] << "\"   \t| Points: " << points << " | Move: " << move <<'\n';
             // Print a position marker
-            printf("%*s^\n", pos, "");
+            printf("%*s☝️\n\n", pos*2, "");
 
             // Do the move
             Colour colour = machine.doTurn(board[pos]);
@@ -131,8 +138,6 @@ class PlatypusGame
 
 int main()
 {
-    std::cout << "Hello World\n";
-
     TransitionTable trans;
     
     trans[Transition(KANGAROO,YELLOW)] = Action(EMU,GREEN,GHOST_GUM);
@@ -145,6 +150,8 @@ int main()
     trans[Transition(WOMBAT,GREEN)] = Action(WOMBAT,GREEN,GHOST_GUM);
 
     trans[Transition(PLATYPUS,YELLOW)] = Action(KANGAROO,GREEN,WATTLE);
+
+    // platypus(1, [t(y,k,g,e,gg),t(g,k,y,w,wa),t(y,e,y,p,gg),t(g,e,y,k,gg),t(y,w,g,w,gg),t(g,w,g,w,gg),t(y,p,g,k,wa)]).
 
     PlatypusMachine machine(trans);
 
