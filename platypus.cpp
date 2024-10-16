@@ -96,10 +96,10 @@ class PlatypusGame
     PlatypusGame(PlatypusMachine m) : machine(m)
     {
         for (int i=0; i<boardSize; i++) board[i]=YELLOW;
-        animal_strings[KANGAROO] = "Kangaroo";
-        animal_strings[WOMBAT] = "Wombat";
-        animal_strings[EMU] = "Emu\t";
-        animal_strings[PLATYPUS] = "Platypus";
+        animal_strings[KANGAROO] = "\"Kangaroo\"";
+        animal_strings[WOMBAT] = "\"Wombat\"";
+        animal_strings[EMU] = "\"Emu\"";
+        animal_strings[PLATYPUS] = "\"Platypus\"";
 
         animal_emoji[KANGAROO] = "🦘";
         animal_emoji[WOMBAT] = "🦔";
@@ -131,7 +131,7 @@ class PlatypusGame
                 {
                     std::cout << (c==YELLOW ? "🟨" : "🟩");
                 }
-                std::cout<<" | Animal: \"" << animal_strings[machine.getAnimal()] << "\"   \t| Points: " << points << " | Move: " << move <<'\n';
+                std::cout<<" | Animal: " << animal_strings[machine.getAnimal()] << "\t| Points: " << points << " | Move: " << move <<'\n';
                 // Print a position marker
                 printf("%*s☝️\n\n", pos*2, "");
             }
