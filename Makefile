@@ -9,8 +9,8 @@ TEST_DIR := ./tests
 # TODO: Some shit to change the flags like make debug and make release
 # Release (level 3 optimise, strip data): -O3 -s
 # Debug ( -g3 -ggdb )
-CFLAGS := -std=c++23 -m64 -pthread -Wall -g3 -ggdb -c
-# CFLAGS := -Wall -Werror -std=c++14 -O
+#CFLAGS := -std=c++23 -m64 -pthread -Wall -g3 -ggdb -c
+ CFLAGS := -Wall -Werror -std=c++23 -Ofast
 
 # mkdir
 ifeq ($(OS),Windows_NT)

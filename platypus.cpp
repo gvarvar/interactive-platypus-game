@@ -198,10 +198,16 @@ int main()
     //PlatypusMachine machine(trans);
 
     PlatypusGame game(machine);
-    game.setboard("GGGYYYYGYGGGGGG");
-    const int f = game.play(true);
+    game.setboard("GGGYYYYGYGGGGGGYYYYYY");
+    int f = game.play(true);
 
     std::cout << "You ended the platypus game in " << f << " moves.\n";
+
+    PlatypusGame game2(machine);
+    game2.setboard(min_string);
+    f = game2.play(true);
+
+    std::cout << "The optimal solution ends in " << f << " moves.\n";
 
     return 0;
 }
