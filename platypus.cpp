@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstdio>
 #include <functional>
+#include <cmath>
 
 enum Animal
 {
@@ -205,9 +206,10 @@ int main()
 
     PlatypusGame game2(machine);
     game2.setboard(min_string);
-    f = game2.play(true);
+    game2.play(true);
 
-    std::cout << "The optimal solution ends in " << f << " moves.\n";
+    std::cout << "The optimal solution ends in " << min << " moves.\n";
+    std::cout << "Final score: " << std::roundf(100.0f * ((float)min/(float)f)) << "\n";
 
     return 0;
 }
