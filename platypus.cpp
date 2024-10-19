@@ -243,22 +243,63 @@ int main()
         }
         if (m == min) duplicates++; });
 
-    std::cout << "best answer is " << min_string << " in " << min << " with " << duplicates << " other solutions\n";
+    //std::cout << "best answer is " << min_string << " in " << min << " with " << duplicates << " other solutions\n";
     if (min == -1) { std::cout << "Can't find a solution! Retrying...\n" ;goto regenerate;}
 
     // PlatypusMachine machine(trans);
+
+    // Print some info
+    std::cout << "Welcome to the platypus termination game. These are the transitions for this machine:\n\n";
+
+    // Show the machine:
+    std::map<Animal, std::string> animal_strings;
+    animal_strings[KANGAROO] = "Kangaroo";
+    animal_strings[WOMBAT] = "Wombat";
+    animal_strings[EMU] = "Emu";
+    animal_strings[PLATYPUS] = "Platypus";
+
+    for (const auto& pair : trans)
+    {
+        const Transition t = pair.first;
+        const Action a = pair.second;
+
+        std::cout << animal_strings[t.first] << " + " << (t.second == YELLOW ? "Yellow" : "Green") << " --> Become " << animal_strings[a.animal] 
+        << ", make cell " << (a.colour == YELLOW ? "Yellow" : "Green") << " and move to the " << (a.tree == GHOST_GUM ? "Ghost Gum (Right)" : "Wattle (Left)") << '\n';
+    }
+
+    // Print some more info
+    std::cout << "\nType 21 colours, 'Y' or 'G' to input a board. The computer found an optimal solution in " << min << " moves. Good luck!\n";
+
+    // Get input:
+    std::string player_input;
+
+    for (;;)
+    {
+        std::getline(std::cin, player_input);
+
+        // Only Y or G allowed
+        bool legalchars = true;
+        for (const char& c : player_input)
+            if (c != YELLOW && c != GREEN) { std::cerr << "Invalid characters, 'Y' and 'G' only.\n"; legalchars = false; break; }
+
+        if (!legalchars) continue;
+
+        // 21 chars check
+        if (player_input.length() != 21) { std::cerr << "Input must have 21 cells.\n"; continue; }
+        else {break;} // End the loop
+    }
 
     PlatypusGame game(machine);
     game.setboard("GGGYYYYGYGGGGGGYYYYYY");
     int f = game.play(true);
 
-    std::cout << "You ended the platypus game in " << f << " moves.\n";
+    std::cout << "You ended the platypus game in " << f << " moves.\nThis is the optimal solution:\n";
 
     PlatypusGame game2(machine);
     game2.setboard(min_string);
     game2.play(true);
 
-    std::cout << "The optimal solution ends in " << min << " moves.\n";
+    std::cout << "The optimal solution was '" << min_string << "' ending in " << min << " moves.\n";
     std::cout << "Final score: " << std::roundf(100.0f * ((float)min / (float)f)) << "\n";
 
     return 0;
