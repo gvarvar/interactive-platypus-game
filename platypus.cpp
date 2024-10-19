@@ -120,7 +120,7 @@ class PlatypusGame
     {
         //std::cout << "Playing platypus game\n";
 
-        for (int move = 0; machine.getAnimal() != TERMINATED && move<500; ++move)
+        for (int move = 0; machine.getAnimal() != TERMINATED && move<100; ++move)
         {
             const int pos = machine.getPosition() % 20; // Loops
 
